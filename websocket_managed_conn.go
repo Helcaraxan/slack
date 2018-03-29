@@ -331,6 +331,9 @@ func (rtm *RTM) handleRawEvent(rawEvent json.RawMessage) {
 		rtm.handlePong(rawEvent)
 	case "desktop_notification":
 		rtm.Debugln("Received desktop notification, ignoring")
+	case "goodbye":
+		rtm.killChannel <- false
+		rtm.Debugln("Received goodbye notification, triggering a reconnect")
 	default:
 		rtm.handleEvent(event.Type, rawEvent)
 	}
